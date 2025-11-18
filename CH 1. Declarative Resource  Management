@@ -1,3 +1,8 @@
 # oc adm policy add-scc-to-user anyuid -z default
 # oc scale --replicas=4 deployment/bibek (bibek is the deployment name)
 # oc create deployment ______ --image=httpd --dry-run=client -oyaml
+           {{  oc create deployment ______ --image=httpd --dry-run=client -oyaml > bibek-app.yaml }}
+
+# oc create ns _____ --dry-run=client -oyaml
+{{ oc create ns _____ --dry-run=client > ns.yaml }}
+# oc apply -f .
