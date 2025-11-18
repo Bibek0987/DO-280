@@ -1,2 +1,3 @@
-# DO-280
-Openshift
+Chapter 1 ____
+# oc adm policy add-scc-to-user anyuid -z default
+# oc scale --replicas=4 deployment/bibek (bibek is the deployment name)
