@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: demo-app
+  name: demo-app
+spec:
+  host: demo-app.apps.cluster-rx9gw.sandbox3008.opentlc.com  (IN PLACE OF DEMO-APP IT WILL ANY CLUSTER NAME/ APP NAME)
+  port:
+    targetPort: 80-80
+  to:
+    kind: ""
+    name: demo-app
+    weight: null
+status: {}
