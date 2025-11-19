@@ -8,7 +8,7 @@ DAY - 01
 {{ oc create ns _____ --dry-run=client > ns.yaml }}
 # oc apply -f .
 
-_________________  DAY - 02  ______________________________________________________________________________________________________________
+_________________  DAY - 02  _______________________________________________________________________________________________________________
 # oc create svc clusterip demo-app --tcp=8080:8080 --dry-run=client -oyaml
          {{ oc create svc clusterip demo-app --tcp=8080:8080 --dry-run=client -oyaml > service.yaml }}
 # oc delete ns bubu
