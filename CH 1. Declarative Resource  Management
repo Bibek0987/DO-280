@@ -1,8 +1,37 @@
+DAY - 01
 # oc adm policy add-scc-to-user anyuid -z default
-# oc scale --replicas=4 deployment/bibek (bibek is the deployment name)
+# oc scale --replicas=4 deployment/bubu (bibek is the deployment name)
 # oc create deployment ______ --image=httpd --dry-run=client -oyaml
            {{  oc create deployment ______ --image=httpd --dry-run=client -oyaml > bibek-app.yaml }}
 
 # oc create ns _____ --dry-run=client -oyaml
 {{ oc create ns _____ --dry-run=client > ns.yaml }}
 # oc apply -f .
+
+_________________  DAY - 02
+# oc create svc clusterip demo-app --tcp=8080:8080 --dry-run=client -oyaml
+         {{ oc create svc clusterip demo-app --tcp=8080:8080 --dry-run=client -oyaml > service.yaml }}
+# oc delete ns bubu
+# vi service.yaml 
+=>
+{{ apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: demo-app
+  name: demo-app
+  namespace: bubu
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: demo-app
+  type: ClusterIP
+status:
+  loadBalancer: {}   }}}
+
+# oc apply -f
