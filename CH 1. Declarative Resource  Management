@@ -35,3 +35,18 @@ status:
   loadBalancer: {}   }}}
 
 # oc apply -f
+# oc get ep
+# oc get po -owide
+# oc create route edge demo-app --service=demo-app --dry-run=client -oyaml > route.yaml
+# oc apply -f route.yaml
+# oc get route
+# oc debug no/ (node name)
+# curl -v (pod ip):80 (it should run 80 port number )
+#  oc get  route -n openshift-console 
+# oc delete route --all
+# oc expose svc(service)/demo-app
+#  oc create route edge demo-app --service=demo-app --path=/
+# oc get route -A
+# oc expose svc/demo-app --hostname=apps.cluster-rx9gw.sandbox3008.opentlc.com --dry-run=client -oyaml
+ ((  host: apps.cluster-rx9gw.sandbox3008.opentlc.com
+          In test cluster I had to change the hostname  host: apps.cluster-rx9gw.sandbox3008.opentlc.com to test. host: apps.cluster-rx9gw.sandbox3008.opentlc.com ))
