@@ -3,3 +3,6 @@ _______________________KUSTOMIZATION______________________________
 #  oc apply -f deployment.yaml --validate=true --dry-run=server
      =>>   deployment.apps/bubu configured (server dry run)   <<=
 
+# oc diff -f ( you can see the difference made in the yaml file & anything )
+#  oc rollout restart deployment/bubu
+                     (deployment/ Deployment-name)  
