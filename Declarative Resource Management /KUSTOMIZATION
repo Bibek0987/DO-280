@@ -1,1 +1,5 @@
 _______________________KUSTOMIZATION______________________________
+#  oc apply -f deployment.yaml --validate=true
+#  oc apply -f deployment.yaml --validate=true --dry-run=server
+     =>>   deployment.apps/bubu configured (server dry run)   <<=
+
