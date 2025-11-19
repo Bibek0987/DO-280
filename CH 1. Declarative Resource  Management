@@ -49,4 +49,4 @@ status:
 # oc get route -A
 # oc expose svc/demo-app --hostname=apps.cluster-rx9gw.sandbox3008.opentlc.com --dry-run=client -oyaml
  ((  host: apps.cluster-rx9gw.sandbox3008.opentlc.com
-          In test cluster I had to change the hostname  host: apps.cluster-rx9gw.sandbox3008.opentlc.com to test. host: apps.cluster-rx9gw.sandbox3008.opentlc.com ))
+          In test cluster I had to change the hostname  {host: apps.cluster-rx9gw.sandbox3008.opentlc.com} TO {test. host: apps.cluster-rx9gw.sandbox3008.opentlc.com} ))
