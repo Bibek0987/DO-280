@@ -16,3 +16,26 @@ spec:
   type: ClusterIP
 status:
   loadBalancer: {}
+
+
+__________________________________________________________________________________________________________________________________________________
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: bibek-svc
+  name: bibek-svc
+  namespace: bibek-app
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: bibek-app
+  type: ClusterIP
+status:
+  loadBalancer: {}
