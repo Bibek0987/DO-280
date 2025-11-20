@@ -6,3 +6,13 @@ resources:
 - deployment.yaml
 - service.yaml
 - route.yaml
+ ( THIS IS FOR ONE CLUSTER )
+
+ apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- deployment.yaml
+- service.yaml
+
+HERE route.yaml FILE WILL NOT BE PRESENT BECAUSE IT IS A DYNAMIC RESOURCE WHICH IS ALWAYS GOING TO BE CHANGED ALWAYS
