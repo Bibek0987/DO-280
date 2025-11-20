@@ -6,3 +6,8 @@ _______________________KUSTOMIZATION______________________________
 # oc diff -f ( you can see the difference made in the yaml file & anything )
 #  oc rollout restart deployment/bubu
                      (deployment/ Deployment-name)  
+
+____________________________
+
+#  oc create ns bibek-app --dry-run=client -oyaml
+
