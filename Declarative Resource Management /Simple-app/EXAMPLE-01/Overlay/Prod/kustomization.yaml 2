@@ -22,3 +22,20 @@ resources:
 #  - name: mysql
 #    newName: registry.redhat.io/rhel/mysql-80
 #    newTag: 1-152
+
+-----------------------------------------------------------------------------------XXXXXXXXXX-------------------------------------------------------------------
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: bibek-dev
+bases:
+- ../../base
+
+resources:
+- route.yaml
+
+patches:
+- path: replicas.yaml
+  target:
+    kind: Deployment
+    name: bibek-app
