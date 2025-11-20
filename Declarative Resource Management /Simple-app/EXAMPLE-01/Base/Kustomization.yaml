@@ -7,8 +7,8 @@ resources:
 - service.yaml
 - route.yaml
  ( THIS IS FOR ONE CLUSTER )
-
- apiVersion: kustomize.config.k8s.io/v1beta1
+_________________________________________________________________________________________________________-
+apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
