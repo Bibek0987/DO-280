@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-app 
-  namespace: test-argocd-02
+  name: bibek-app
+  namespace: bibek-app
 spec:
   replicas: 5   ( it will vary according to cluster or env)
