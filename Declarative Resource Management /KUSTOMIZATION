@@ -11,3 +11,4 @@ ____________________________
 
 #  oc create ns bibek-app --dry-run=client -oyaml
 # oc describe deployment
+#   oc apply -k  ( for kustomization )
