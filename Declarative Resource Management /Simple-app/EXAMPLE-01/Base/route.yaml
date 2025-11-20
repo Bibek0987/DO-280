@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: bibek-svc
+  name: bibek-svc
+spec:
+  host: bibek-test.apps.cluster-rx9gw.sandbox3008.opentlc.com
+  port:
+    targetPort: 8080-8080
+  to:
+    kind: ""
+    name: bibek-svc
+    weight: null
+status: {}
