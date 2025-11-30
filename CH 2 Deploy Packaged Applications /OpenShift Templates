@@ -1,0 +1,6 @@
+Cluster Samples Operator provides are in the OpenShift namespace
+#  oc get templates -n openshift
+# oc get is -n openshift (( is ::-- IMAGE STREAM ))
+# oc get is -n openshift -oname (( only name list )) ///  # oc get templates -n openshift -oname
+MYSQL-EPHEMERAL (( ephemeral means empty directory, Empty volume ))
+MYSQL-PERSISTANT (( Persistant means you are going to add the volume ))
