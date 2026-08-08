@@ -1,5 +1,13 @@
 DAY - 01
 # oc adm policy add-scc-to-user anyuid -z default
+
+{{{         Part	Meaning
+oc adm policy	Manage OpenShift policies
+add-scc-to-user	Grant an SCC to a user or ServiceAccount
+anyuid	           The SCC being granted
+-z default	           Grant it to the default ServiceAccount }}}}
+
+
 # oc scale --replicas=4 deployment/bubu (bibek is the deployment name)
 # oc create deployment ______ --image=httpd --dry-run=client -oyaml
            {{  oc create deployment ______ --image=httpd --dry-run=client -oyaml > bibek-app.yaml }}
