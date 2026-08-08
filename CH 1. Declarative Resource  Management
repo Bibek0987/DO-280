@@ -9,7 +9,7 @@ anyuid	           The SCC being granted
 
 
 # oc scale --replicas=4 deployment/bubu (bibek is the deployment name)
-# oc create deployment ______ --image=httpd --dry-run=client -oyaml
+# oc create deployment ______ --image=httpd --dry-run=client -oyaml ((( --dry-run=client --->> Don't create or change anything in the cluster. Just generate the resource locally.)) 
            {{  oc create deployment ______ --image=httpd --dry-run=client -oyaml > bibek-app.yaml }}
 
 # oc create ns _____ --dry-run=client -oyaml
