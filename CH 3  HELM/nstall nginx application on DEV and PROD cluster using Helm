@@ -1,6 +1,12 @@
-# Add Bitnami Helm repository
+# Check if bitnami is already in your local Helm repo list
+$$ helm repo list
+
+# If bitnami is NOT listed, add it (this only affects your local CLI, not the cluster)
 $$ helm repo add bitnami https://charts.bitnami.com/bitnami
 $$ helm repo update
+
+# Confirm the nginx chart is searchable
+$$ helm search repo bitnami/nginx
 
 # Create independent namespaces for DEV and PROD
 $$ oc new-project nginx-dev
@@ -8,11 +14,8 @@ $$ oc new-project nginx-prod
 
 DEV Environment Configuration :--->> 
 Create nginx-dev-values.yaml:
-
-yaml
 # nginx-dev-values.yaml
 replicaCount: 2
-
 resources:
   requests:
     cpu: 10m
@@ -20,18 +23,13 @@ resources:
   # DEV does not set limits, inheriting chart defaults (usually empty)
 
 Install to DEV:
-
-bash
 # Install in DEV namespace, referencing only the DEV values file
 $$ helm install nginx-dev bitnami/nginx -n nginx-dev -f nginx-dev-values.yaml
 
 PROD Environment Configuration :---->>
 Create nginx-prod-values.yaml:
-
-yaml
 # nginx-prod-values.yaml
 replicaCount: 3
-
 resources:
   requests:
     cpu: 20m
@@ -41,8 +39,6 @@ resources:
     memory: 120Mi
 
 Install to PROD:
-
-bash
 # Install in PROD namespace, referencing only the PROD values file
 $$ helm install nginx-prod bitnami/nginx -n nginx-prod -f nginx-prod-values.yaml
 
