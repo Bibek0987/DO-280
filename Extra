@@ -1,0 +1,46 @@
+Alternative commands (same result or focused output)
+1. Different output formats for the same object:
+
+bash
+$$ oc get secret kubeadmin -n kube-system -o json      # JSON instead of YAML
+$$ oc get secret kubeadmin -n kube-system -o wide      # one-line summary table
+$$ oc get secret kubeadmin -n kube-system              # default table (NAME TYPE DATA AGE)
+$$ oc describe secret kubeadmin -n kube-system         # human-readable, no full data dump
+2. Space-separated instead of slash (identical behavior):
+
+bash
+$$ oc get secret kubeadmin -n kube-system -o yaml
+3. Decode the password directly (most useful for "finding kubeadmin"):
+
+bash
+# YAML output piped to yq
+$$ oc get secret kubeadmin -n kube-system -o yaml | yq '.data.kubeadmin' | base64 -d; echo
+
+# jsonpath — no external tools needed
+$$ oc get secret kubeadmin -n kube-system -o jsonpath='{.data.kubeadmin}' | base64 -d; echo
+
+# Go template
+$$ oc get secret kubeadmin -n kube-system -o go-template='{{.data.kubeadmin | base64decode}}{{"\n"}}'
+4. Confirm it exists without dumping the whole object:
+
+bash
+$$ oc get secret kubeadmin -n kube-system -o name        # prints: secret/kubeadmin
+$$ oc get secret kubeadmin -n kube-system --no-headers   # just the table row
+5. Check metadata only (safer when sharing screenshots):
+
+bash
+$$ oc get secret kubeadmin -n kube-system -o jsonpath='{.metadata.name}{"\n"}{.metadata.creationTimestamp}{"\n"}'
+6. List all secrets in kube-system (in case you're not sure of the name):
+
+bash
+$$ oc get secrets -n kube-system | grep -i kubeadmin
+Practical recommendation
+For daily checks / confirming kubeadmin still exists: use oc get secret kubeadmin -n kube-system (table) or -o name. Fast, no sensitive data on screen.
+
+For reading the password (break-glass): use the jsonpath + base64 -d form — it's the shortest and needs no yq/jq.
+
+For auditing / capturing the full object: the -oyaml version you asked about is correct — just remember data is base64, so don't mistake it for a corrupt value.
+
+Avoid -oyaml in shared terminals or logs when it contains the password; the base64 value is trivially decodable by anyone who sees it.
+
+So: your command means "fetch the kubeadmin Secret object from kube-system and print it as YAML." The alternatives above let you do the same thing with more focus, less noise, or with the password decoded.
