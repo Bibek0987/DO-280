@@ -3,7 +3,8 @@ Execute the following command as a user with cluster-admin privileges. If the ou
 
 bash
 # Check if the kubeadmin secret exists in the kube-system namespace
-oc get secrets kubeadmin -n kube-system
+$$ oc get secrets kubeadmin -n kube-system
+
 Expected output example:
 
 text
@@ -16,13 +17,15 @@ If you need to confirm the password (for example, to verify it matches the one p
 
 bash
 # Decode and view the plaintext password of kubeadmin
-oc get secret kubeadmin -n kube-system -o jsonpath='{.data.kubeadmin}' | base64 --decode && echo
+
+$$ oc get secret kubeadmin -n kube-system -o jsonpath='{.data.kubeadmin}' | base64 --decode && echo
 Step 3: (Optional) Confirm Its Privileges
 Although this user is not in the user list, you can verify its bound permissions. kubeadmin is typically directly bound to the cluster-admin role.
 
 bash
 # Check cluster role bindings and filter for kubeadmin-related items
-oc get clusterrolebindings -o wide | grep kubeadmin
+$$ oc get clusterrolebindings -o wide | grep kubeadmin
+
 ⚠️ Key Reminder: Do Not Delete
 The requirement you mentioned to "not delete" is very important. Official OpenShift documentation explicitly warns: Before you have created another user with cluster-admin privileges and verified that they can log in normally through an identity provider (such as LDAP/AD), absolutely do not execute oc delete secrets kubeadmin -n kube-system. Otherwise, the cluster will be permanently locked, and the only solution is to reinstall the cluster .
 
