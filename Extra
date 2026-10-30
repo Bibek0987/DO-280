@@ -1,3 +1,6 @@
+
+$$ oc get secret/kubeadmin -n kube-system -oyaml
+
 Alternative commands (same result or focused output)
 1. Different output formats for the same object:
 
