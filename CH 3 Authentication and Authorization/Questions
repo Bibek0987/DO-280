@@ -1,0 +1,95 @@
+Task-11: Configure Local identity provider in OpenShift
+
+-> Create 5 users called user01 to user05
+-> User password same as the user name
+-> Htpasswd Provider name should be j2c-htpasswd
+-> Htpasswd secret name should be j2c-htpasswd-secret
+
+SOLUTIONS ::------------->>>>>>>>
+
+Prerequisites
+You must be logged in to the OpenShift cluster as a cluster administrator (e.g., kubeadmin).
+
+You need access to a terminal with the oc CLI installed.
+
+The htpasswd utility must be installed (typically available via the httpd-tools package on RHEL/CentOS) .
+
+Step 1: Create the HTPasswd File
+First, generate the flat file containing the user credentials. The -c flag creates a new file, -B uses bcrypt hashing (recommended), and -b allows you to supply the password in the command line .
+
+Command:
+
+bash
+# Create the file with the first user (user01)
+htpasswd -c -B -b users.htpasswd user01 user01
+
+# Append the remaining users (remove the -c flag to avoid overwriting)
+$$ htpasswd -B -b users.htpasswd user02 user02
+$$ htpasswd -B -b users.htpasswd user03 user03
+$$ htpasswd -B -b users.htpasswd user04 user04
+$$ htpasswd -B -b users.htpasswd user05 user05
+Comment: This creates a file named users.htpasswd where the passwords are hashed. Note that the password for each user is exactly the same as their username, as requested.
+
+Step 2: Create the Secret in OpenShift
+You must create a Secret in the openshift-config namespace that contains the htpasswd file. The key inside the secret must be named htpasswd .
+
+Command:
+
+bash
+$$ oc create secret generic j2c-htpasswd-secret --from-file=htpasswd=users.htpasswd -n openshift-config
+
+Comment: This command creates a secret named j2c-htpasswd-secret using the local file users.htpasswd. The --from-file flag maps the file to the key htpasswd inside the secret.
+
+Step 3: Configure the OAuth Identity Provider
+You need to update the cluster's OAuth configuration to add the HTPasswd provider. You can do this by editing the existing cluster OAuth object or applying a YAML file.
+
+Option A: Using oc edit (Interactive)
+Run the following command to open the OAuth configuration in your default editor:
+
+bash
+$$ oc edit oauth cluster
+Under spec.identityProviders, add the following block:
+
+yaml
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+  - name: j2c-htpasswd       # The provider name as requested
+    mappingMethod: claim
+    type: HTPasswd
+    htpasswd:
+      fileData:
+        name: j2c-htpasswd-secret  # The secret name as requested
+Option B: Applying a YAML File
+Alternatively, save the YAML above to a file (e.g., htpasswd-provider.yaml) and run:
+
+bash
+$$ oc apply -f htpasswd-provider.yaml
+Comment: The name field sets the provider name to j2c-htpasswd. The fileData.name references the secret j2c-htpasswd-secret created in the previous step . The mappingMethod: claim is the standard setting for provisioning users.
+
+Step 4: Verification
+After applying the configuration, OpenShift will automatically restart the authentication pods (this may take a minute or two).
+
+Check the OAuth Pods:
+
+bash
+$$ oc get pods -n openshift-authentication
+Wait until the pods show Running status.
+
+Verify the Identity Provider:
+
+bash
+$$ oc get oauth cluster -o yaml
+Look for the 
+j2c-htpasswd
+ entry in the output.
+
+Test Login:
+Log out of the current session and try logging in as one of the new users:
+
+bash
+oc login -u user01 -p user01
+You should see a successful login message 
